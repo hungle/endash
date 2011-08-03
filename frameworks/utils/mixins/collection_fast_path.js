@@ -280,7 +280,6 @@ Endash.CollectionFastPath = {
     if (!content) return;
     
     var item = content.objectAt(index);
-    if (!item) return null;
     
     var exampleView = this.exampleViewForItem(item, index),
         view = this._indexMap[index];
