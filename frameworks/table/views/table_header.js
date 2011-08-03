@@ -12,8 +12,12 @@ SC.TableHeaderView = SC.TableRowView.extend({
   
   /** @private */
   classNames: ['sc-table-header'],
-  
-  exampleView: SC.TableHeaderCellView,
+
+  /**
+    The actual cell view
+    @property {SC.View}
+  */    
+  cellView: SC.TableHeaderCellView,
   
   thumbView: Endash.ThumbView.extend({
     layout: {
@@ -49,20 +53,20 @@ SC.TableHeaderView = SC.TableRowView.extend({
     this.set('calculatedWidth', width);
   },
 
-  headerViewForColumn: function(col) {
+  cellViewForColumn: function(col) {
     var columns = this.get('columns'),
       column = columns.objectAt(col),
       ret;
 
-    if(ret = column.get('exampleHeaderView')) return ret;
+    if(ret = column.get('headerCellView')) return ret;
 
-    return this.get('exampleView');
+    return this.get('cellView');
   },
   
   _createNewCellView: function(col) {
     var columns = this.get('columns'),
       column = columns.objectAt(col),
-      E = this.headerViewForColumn(col),
+      E = this.cellViewForColumn(col),
       layout = SC.clone(E.prototype.layout || {});
       
     layout.left = this.layoutForView(col).left;
@@ -249,7 +253,7 @@ SC.TableHeaderView = SC.TableRowView.extend({
           return;
         } else {
           // if(view == this._mouseDown) {
-            while(!view.instanceOf(this.get('exampleView'))) {
+            while(!view.instanceOf(this.get('cellView'))) {
               view = view.get('parentView');
             }
           
@@ -307,7 +311,7 @@ SC.TableHeaderView = SC.TableRowView.extend({
           return NO;
         }
         
-        while(view && !view.instanceOf(this.get('exampleView'))) {
+        while(view && !view.instanceOf(this.get('cellView'))) {
           view = view.get('parentView');
         }
         

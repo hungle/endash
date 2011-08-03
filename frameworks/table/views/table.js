@@ -1,5 +1,6 @@
 sc_require('views/table_header');
 sc_require('views/data');
+sc_require('views/table_row');
 
 // ==========================================================================
 // Project:   SproutCore - JavaScript Application Framework
@@ -23,15 +24,21 @@ sc_require('views/data');
 /*globals Endash */
 
 SC.TableView = SC.View.extend({
-  // backgroundColor: 'white',
   classNames: ['sc-table-view'],
   
   horizontalScrollOffset: 0,
   
-  thumbView: Endash.ThumbView,
-  
-  headerCellView: Endash.HeaderCellView,
+  /**
+   The view class to use when rendering table rows.
 
+    An instance of this view will automatically be created for each item in the content array. 
+    You should provide your own subclass for this property to customize the overall look of the row.
+    
+    For customizing how the actual content is rendered at each column, you want to set a custom 
+    cellContentView at the specific column instead.
+  */
+  exampleView: SC.TableRowView,
+  
   /**
     An array of content objects
     
@@ -74,6 +81,12 @@ SC.TableView = SC.View.extend({
   */
   rowSpacing: 0,
   
+  /**
+   The view class to render the table header as well as detect column resize and sort. This view
+   can be extended to provide a custom header view for the table.
+
+  */
+  headerView: SC.TableHeaderView,   
   
   /**
     IF YES, a table header will be rendered. Note that if a table header is not rendered, 
@@ -104,9 +117,6 @@ SC.TableView = SC.View.extend({
     @property {SC.ScrollView}
   */
   exampleScrollView: SC.ScrollView,
-  
-  headerCellView: null,
-  thumbView: null,
   
   /**
      Equivalent of the orderBy property of an SC.ArrayController. It is actually bound to the content orderBy property
@@ -273,9 +283,6 @@ SC.TableView = SC.View.extend({
       sortDescriptorBinding: SC.Binding.from('.sortDescriptor',this)
     };
      
-    if(this.get('headerCellView')) attrs.exampleView = this.get('headerCellView');
-    if(this.get('thumbView')) attrs.thumbView = this.get('thumbView');
-    
     this._tableHeaderView = header = this.createChildView(SC.ScrollView.design({
       isVisibleBinding: SC.Binding.from('.useHeaders', this),
       headerHeightBinding: SC.Binding.from('.headerHeight',this),
@@ -303,7 +310,7 @@ SC.TableView = SC.View.extend({
       horizontalScrollOffsetBinding: SC.Binding.from('.horizontalScrollOffset',this),
       
       borderStyle: SC.BORDER_NONE,
-      contentView: SC.TableHeaderView.extend(attrs, {
+      contentView: this.get('headerView').extend(attrs, {
         verticalScrollerThicknessBinding: SC.Binding.from('._dataView.verticalScrollerView.scrollbarThickness', this).oneWay()
       })
     }));
@@ -323,6 +330,7 @@ SC.TableView = SC.View.extend({
         table: this,
         rowHeight: this.get('rowHeight'),
         rowSpacing: this.get('rowSpacing'),
+        exampleView: this.get('exampleView'),
         isEditableBinding: SC.Binding.from('.isEditable',this),
         canEditContentBinding: SC.Binding.from('.canEditContent',this),
         targetBinding: SC.Binding.from('.target',this),

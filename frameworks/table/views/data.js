@@ -27,28 +27,6 @@ Endash.DataView = SC.ListView.extend(Endash.CollectionFastPath, {
   */
   exampleView: SC.TableRowView,
   
-  /**
-    The actual cell view
-    @property {SC.View}
-  */
-  cellView: Endash.TableCellView,
-  
-  /**
-    The cell content view, which gets placed inside a cell
-    and actually displays the contents for the cell
-    @property {SC.View}
-  */
-  cellContentView: SC.LabelView.extend({
-    layout: {left: 10, right: 10},
-    isPoolable: YES,
-    layerIsCacheable: YES,
-    contentValueKeyBinding: '*column.key',
-    
-    contentValueKeyDidChange: function() {
-      this.updatePropertyFromContent('value', '*', 'contentValueKey');
-    }.observes('contentValueKey')
-  }),
-  
   columnsDidChange: function() {
     this.widthsDidChange(null, '[]', 0, YES);
   }.observes('*columns.[]'),
@@ -93,21 +71,6 @@ Endash.DataView = SC.ListView.extend(Endash.CollectionFastPath, {
     this.set('calculatedWidth', width);
   },
 
-  /**
-    @private
-    Gets the cell content class for a given column, defaults to our
-    cellContentView
-  */
-  cellViewForColumn: function(col) {
-    var columns = this.get('columns'),
-      column = columns.objectAt(col),
-      ret;
-      
-    if(ret = column.get('exampleView')) return ret;
-
-    return this.get('cellContentView');
-  },
-  
   /**
     @private
     We handle repositioning the view specifically to avoid the overhead

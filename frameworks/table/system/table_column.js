@@ -97,24 +97,6 @@ SC.TableColumn = SC.Object.extend({
   isSortable: YES,
   
   /**
-    Example view for cells pertaining to this column instance
-
-    @property
-    @type SC.View
-  */
-  
-  // exampleView: Endash.TableCellView,
-  
-  /**
-    Reference to the URL for this column's icon. If `null`, there is no
-    icon associated with the column.
-    @property
-  */
-  icon: null,
-  
-  tableHeader: null,
-
-  /**
     The sort state of this particular column. Can be one of
     SC.SORT_ASCENDING, SC.SORT_DESCENDING, or `null`. For instance, if
     SC.SORT_ASCENDING, means that the table is being sorted on this column
@@ -124,13 +106,22 @@ SC.TableColumn = SC.Object.extend({
     @property
   */
   sortState: null,
+
+  /**
+    The view responsible for rendering the header at the given column. 
+    The default view on the row will be used if this is set to null.
+
+    @property
+  */
+  headerCellView: null,   
   
   /**
-    The content property of the controlling SC.TableView. This is needed
-    because the SC.TableHeader views use this class to find out how to
-    render table content (when necessary).
+    The view responsible for displaying the contents for the cell at the given column.
+    The default view on the row will be used if this is set to null.
+
+    @property
   */
-  tableContent: null,
+  cellContentView: null,
 
   toggleSortState: function() {
     var sortState = this.get('sortState');

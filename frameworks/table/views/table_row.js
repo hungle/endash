@@ -6,6 +6,28 @@ SC.TableRowView = SC.View.extend(SC.SimpleLayout, {
   thicknessesKey: 'columns',
   thicknessKey: 'width',
 
+  /**
+    The actual cell view
+    @property {SC.View}
+  */
+  cellView: Endash.TableCellView, 
+  
+  /**
+    The cell content view, which gets placed inside a cell
+    and actually displays the contents for the cell
+    @property {SC.View}
+  */
+  cellContentView: SC.LabelView.extend({
+    layout: {left: 10, right: 10},
+    isPoolable: YES,
+    layerIsCacheable: YES,
+    contentValueKeyBinding: '*column.key',
+    
+    contentValueKeyDidChange: function() {
+      this.updatePropertyFromContent('value', '*', 'contentValueKey');
+    }.observes('contentValueKey')
+  }),  
+
   columnsBinding: '.parentView.columns',
 
   classNames: ['sc-dataview-row'],
@@ -177,6 +199,21 @@ SC.TableRowView = SC.View.extend(SC.SimpleLayout, {
       view.adjust(layout);
     }
   },
+
+  /**
+    @private
+    Gets the cell content class for a given column, defaults to our
+    cellContentView
+  */
+  cellContentViewForColumn: function(col) {
+    var columns = this.get('columns'),
+      column = columns.objectAt(col),
+      ret;
+      
+    if(ret = column.get('cellContentView')) return ret;
+
+    return this.get('cellContentView');
+  },     
   
   /**
     @private
@@ -185,8 +222,8 @@ SC.TableRowView = SC.View.extend(SC.SimpleLayout, {
   _createNewCellView: function(col) {
     var columns = this.get('columns'),
       column = columns.objectAt(col),
-      E = this.get('parentView').cellViewForColumn(col),
-      wrapper = this.get('parentView').get('cellView'),
+      E = this.cellContentViewForColumn(col),
+      wrapper = this.get('cellView'),
       attrs = {};
       
     var content = this.get('content');
