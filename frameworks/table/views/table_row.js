@@ -6,11 +6,18 @@ SC.TableRowView = SC.View.extend(SC.SimpleLayout, {
   thicknessesKey: 'columns',
   thicknessKey: 'width',
 
+  //displayProperties: ['isSelected'],
+
   /**
     The actual cell view
     @property {SC.View}
   */
   cellView: Endash.TableCellView, 
+
+  isSelectedDidChange: function() {
+    var classes = { sel: this.get('isSelected') };
+    this.$().setClass(classes);
+  }.observes('isSelected'),
   
   /**
     The cell content view, which gets placed inside a cell
@@ -32,25 +39,15 @@ SC.TableRowView = SC.View.extend(SC.SimpleLayout, {
 
   classNames: ['sc-dataview-row'],
   
-  isSelectedDidChange: function() {
-    var isSelected = this.get('isSelected');
-    if(isSelected) {
-      this.$().addClass('sel');
-    } else {
-      this.$().removeClass('sel');
-    }
-  }.observes('isSelected'),
-  
   render: function(context, firstTime) {
-    if(firstTime) {
-      var classArray = [];
-
-      classArray.push((this.get('contentIndex') % 2 === 0) ? 'even' : 'odd');
-      context.addClass(classArray);
+    if (firstTime) {
+      var classes = [];
+      classes.push((this.get('contentIndex') % 2 === 0) ? 'even' : 'odd');
+      if (this.get('isSelected')) classes.push('sel');
+      context.addClass(classes);
     }
-    sc_super();
   },
-  
+
   // we'll handle layout from here-on-out thank you
   // renderLayout: function(context, firstTime) {
   //   if(firstTime) sc_super();
