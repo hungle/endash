@@ -27,6 +27,8 @@ Endash.DataView = SC.ListView.extend(Endash.CollectionFastPath, {
   */
   exampleView: SC.TableRowView,
   
+  hasDragHover: NO,
+  
   columnsDidChange: function() {
     this.widthsDidChange(null, '[]', 0, YES);
   }.observes('*columns.[]'),
@@ -146,6 +148,29 @@ Endash.DataView = SC.ListView.extend(Endash.CollectionFastPath, {
   layoutChildViews: function() {
     // This is already handled internally
     this.reloadIfNeeded(null, true);
-  }
+  },
+
+
+  /**
+    Implements the SC.DropTarget protocol.  
+    Called when drag enters droppable area.
+  */
+  dragEntered: function(drag, evt) {
+    if (this.get('isDropTarget')) {
+     this.set('hasDragHover', YES);
+    }
+  }, 
+
+  /**
+    Implements the SC.DropTarget protocol.  
+    Called when drag exits droppable area.
+  */
+  dragExited: function(drag, evt) {
+    sc_super();
+
+    if (this.get('isDropTarget')) {
+      this.set('hasDragHover', NO);
+    }
+  } 
 
 });

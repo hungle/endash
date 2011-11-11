@@ -25,6 +25,10 @@ sc_require('views/table_row');
 
 SC.TableView = SC.View.extend({
   classNames: ['sc-table-view'],
+
+  displayProperties: ['hasDragHover'],
+
+  hasDragHover: NO,
   
   horizontalScrollOffset: 0,
   
@@ -349,7 +353,8 @@ SC.TableView = SC.View.extend({
         useToggleSelectionBinding: SC.Binding.from('.useToggleSelection',this),
         delegate: this.get('delegate'),
         isDropTarget: this.get('isDropTarget'),
-        isSelectable: this.get('isSelectable')
+        isSelectable: this.get('isSelectable'),
+        hasDragHoverBinding: SC.Binding.from('.hasDragHover', this)
       }),
 
       autohidesVerticalScroller: NO,
@@ -410,7 +415,10 @@ SC.TableView = SC.View.extend({
   widthsDidChange: function(object, key, value, force) {
     this._dataView.contentView.widthsDidChange(object, key, value, force);
     this._tableHeaderView.contentView.widthsDidChange(object, key, value, force);
-  }.observes('*columns.@each.width')
+  }.observes('*columns.@each.width'),
 
-  
+  render: function(context, firstTime) {
+    context.setClass('sel', this.get('hasDragHover'));
+  }
+
 });
