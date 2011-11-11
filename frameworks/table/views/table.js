@@ -117,6 +117,12 @@ SC.TableView = SC.View.extend({
     @property {SC.ScrollView}
   */
   exampleScrollView: SC.ScrollView,
+
+  /**
+   An example DataView that will be used to handle the rows.
+
+  */
+  exampleDataView: Endash.DataView,
   
   /**
      Equivalent of the orderBy property of an SC.ArrayController. It is actually bound to the content orderBy property
@@ -325,7 +331,7 @@ SC.TableView = SC.View.extend({
       },
       hasHorizontalScrollerBinding: SC.Binding.from('hasHorizontalScroller', this),
       borderStyle: SC.BORDER_NONE,
-      contentView: Endash.DataView.design({
+      contentView: this.get('exampleDataView').design({
         classNames: ['sc-table-data-view'],
         table: this,
         rowHeight: this.get('rowHeight'),
