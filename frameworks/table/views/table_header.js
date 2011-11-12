@@ -288,6 +288,7 @@ SC.TableHeaderView = SC.TableRowView.extend({
     this._mouseDown = NO;    
     
     var view = $(evt.target).view()[0];
+    if (!view) return NO;
 
     if(this._thumbDragging) {
       
@@ -314,8 +315,10 @@ SC.TableHeaderView = SC.TableRowView.extend({
           view = view.get('parentView');
         }
         
-        if(view) {
-          this.get('table').sortByColumn(view.get('column'), view.get('sortState'));
+        if (view) {
+          if (view.getPath('column.isSortable')) {
+            this.get('table').sortByColumn(view.get('column'), view.get('sortState'));
+          }
         }
       }
       this._lastX = null;
