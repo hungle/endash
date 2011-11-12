@@ -1,112 +1,115 @@
-.sc-table-header {
-  background: static_url('resources/table_header_background_3.png') center left !important;
-  border-bottom: 1px solid #CACACA;
+$theme.sc-table-view {
+  border-left: 1px solid #E0E0E0;
+  border-right: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+ 
+  &.sel {
+    -webkit-box-shadow: 0 0 4px 2px rgba(91, 156, 213, 0.9), inset 0 1px 4px rgba(0, 0, 0, 0.5);
+	  -moz-box-shadow: 0 0 2px 2px rgba(91, 156, 213, 0.9), inset 0 1px 4px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 0 2px 2px rgba(91, 156, 213, 0.9), inset 0 1px 4px rgba(0, 0, 0, 0.5); 
+  }         
 }
 
-.sc-table-header .sc-table-cell {
-  overflow: visible !important;
-}
+$theme.sc-table-header {
+  border-bottom: 1px solid #E0E0E0; 
+  border-top: 1px solid #E0E0E0; 
+  background-image: linear-gradient(bottom, rgb(235,235,235) 5%, rgb(253,253,253) 57%);
+  background-image: -o-linear-gradient(bottom, rgb(235,235,235) 5%, rgb(253,253,253) 57%);
+  background-image: -moz-linear-gradient(bottom, rgb(235,235,235) 5%, rgb(253,253,253) 57%);
+  background-image: -webkit-linear-gradient(bottom, rgb(235,235,235) 5%, rgb(253,253,253) 57%);
+  background-image: -ms-linear-gradient(bottom, rgb(235,235,235) 5%, rgb(253,253,253) 57%);
 
-.sc-table-header .sc-table-cell label {
-  display: block;
-  font-family: Helvetica;
-  line-height: 18px;
-  font-weight: normal;
-  color: #363636;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: auto;
-  margin: 0px;
-}
+  background-image: -webkit-gradient(
+    linear, 
+    right bottom, 
+    right top, 
+    color-stop(0.05, rgb(235,235,235)), 
+    color-stop(0.70, rgb(253,253,253))
+  ); 
 
-  .sc-table-header .sc-thumb-view {
-    z-index: 3 !important;
+  .sc-table-cell {
     overflow: visible;
-    background: static_url('resources/grippy2.png') 6px center no-repeat !important;
+
+    label {
+      display: block;
+      font-family: Helvetica;
+      line-height: 18px;
+      font-weight: normal;
+      color: #363636;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: auto;
+      margin: 0px; 
+    }
+
+    &.sel {
+      background-image: linear-gradient(bottom, rgb(100,159,242) 14%, rgb(168,206,250) 70%);
+      background-image: -o-linear-gradient(bottom, rgb(100,159,242) 14%, rgb(168,206,250) 70%);
+      background-image: -moz-linear-gradient(bottom, rgb(100,159,242) 14%, rgb(168,206,250) 70%);
+      background-image: -webkit-linear-gradient(bottom, rgb(100,159,242) 14%, rgb(168,206,250) 70%);
+      background-image: -ms-linear-gradient(bottom, rgb(100,159,242) 14%, rgb(168,206,250) 70%);
+
+      background-image: -webkit-gradient(
+        linear,
+      	left bottom,
+      	left top,
+      	color-stop(0.14, rgb(100,159,242)),
+      	color-stop(0.7, rgb(168,206,250))
+      );
+    }
+  }
+}
+
+$theme.sc-table-header .sc-thumb-view {
+  z-index: 3;
+  overflow: visible;
+  background: static_url('resources/grippy2.png') 6px center no-repeat;
+}
+
+$theme.sc-table-header .sc-thumb-view:hover, .sc-table-header .sc-thumb-view.dragging {
+  background: static_url('resources/grippy.png') 6px center no-repeat;
+}
+
+$theme.sc-table-header .dragger {
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  width: 0px;
+  bottom: 0px;
+  border-right: 1px solid rgba(255, 255, 255, .5);
+  border-left: 1px solid rgba(0, 0, 0, .1);
+}
+    
+$theme.sc-table-header .dragging .dragger {
+  display: none;
+}
+    
+$theme.sc-table-data-view .sc-dataview-row {
+  background-color: white;
+
+  &.odd {
+    background-color: #f9fafb;
   }
 
-    .sc-table-header .sc-thumb-view:hover, .sc-table-header .sc-thumb-view.dragging {
-      background: static_url('resources/grippy.png') 6px center no-repeat !important;
-    }
-
-    .sc-table-header .dragger {
-      position: absolute;
-      top: 0px;
-      right: -2px;
-      width: 0px;
-      bottom: 0px;
-      border-right: 1px solid rgba(255, 255, 255, .5);
-      border-left: 1px solid rgba(0, 0, 0, .1);
-    }
+  &.sel {
+    background-color: #72bdf7;
     
-    .sc-table-header .dragging .dagger {
-      display: none !important;
+    .table-cell {
+      border-right: none;
     }
-    
-.sc-table-data-view .sc-dataview-row.odd {
-/*  background-color: #f6fafe !important;*/
-  background-color: #f9fafb !important;
-}
 
+    .sc-label-view {
+      color: white; 
+      font-weight: bold;
+    }
+  }
 
-.sc-table-data-view .sc-dataview-row.sel {
-
-
-/*  background-color: #38a0f0 !important;*/
-  background-color: #72bdf7 !important;
-/*  background-color: #84c1f0 !important;*/
-/*  border-bottom: 1px solid #5ab5fb !important;*/
-/*  border-bottom: 1px solid white !important;*/
-  color: white !important;
-}
-
-.sc-table-data-view .sc-dataview-row.sel .sc-label-view {
-/*  background-color: #6aabe3 !important;*/
-  color: white !important;
-  font-weight: bold !important;
-}
-
-
-
-
-
-
-/*.sc-table-data-view .table-cell {*/
-/*  border-right: 1px solid rgba(0, 0, 0, .05);*/
-/*background-color: white;*/
-/*}*/
-
-.sc-table-data-view .sc-dataview-row {
-  background-color: white;
-}
-
-.sc-table-data-view .sc-dataview-row.sel .table-cell {
-  border-right: none !important;
-}
-
-.sc-table-data-view .table-cell .sc-label-view {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-family: Helvetica;
-  font-size: 12px !important;
-  line-height: 30px !important;
-  
-  color: #404040;
-}
-
-
-
-.sc-table-data-view .sc-dataview-row {
-/*  border-bottom: 1px solid rgba(0, 0, 0, .07);*/
-}
-
-.sc-table-data-view .odd.sc-dataview-row {
-/*  border-bottom: 1px solid rgba(0, 0, 0, .05);*/
-}
-
-
-.sc-table-data-view .odd {
-/*  background-color: #f9fafb !important;*/
+  .sc-label-view {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 30px;
+    color: #404040; 
+  }
 }
 
 .sc-sort-state-asc {

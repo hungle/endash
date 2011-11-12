@@ -8,13 +8,29 @@ SC.TableHeaderCellView = SC.View.extend({
 
   tagName: 'div',
   
+  displayProperties: ['column','title', 'isSelected'],
+
+  isSelected: function() {
+    var ret;
+    switch (this.get('sortState')) {
+    case 'ASC':
+    case 'DESC':
+      ret = YES;
+      break;
+
+    default:
+      ret = NO;
+      break;
+    }
+
+    return ret;
+  }.property('sortState').cacheable(),
+
   column: null,
     
   // TableHeader will pass this along
   thumbView: null,
-  
-  displayProperties: ['column','title'],
-  
+
   sortDescriptor: null,
   sortDescriptorBinding: '.parentView.sortDescriptor',
   
@@ -35,6 +51,10 @@ SC.TableHeaderCellView = SC.View.extend({
     this.set('sortStateView', sortStateView);
 
     this.set('childViews', [labelView, thumbView, sortStateView]);
+  },
+
+  render: function(context, firstTime) {
+    context.setClass('sel', this.get('isSelected'));
   },
   
   labelView: SC.View.extend({
@@ -71,8 +91,6 @@ SC.TableHeaderCellView = SC.View.extend({
       this.displayDidChange();
     }.observes('sortState')
   }),
-  
-
   
   
   /** @private */

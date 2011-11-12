@@ -202,11 +202,8 @@ SC.TableHeaderView = SC.TableRowView.extend({
       this._mouseDownY = this._lastY = evt.pageY ;
   
       return YES ;
-    } else {
-      // if(view == this) {
-      //   return NO;
-      // }
-      
+    } 
+    else {
       this._initialX = evt.pageX;
     }
     
