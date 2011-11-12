@@ -79,11 +79,7 @@ $theme.sc-table-header .dragger {
   border-right: 1px solid rgba(255, 255, 255, .5);
   border-left: 1px solid rgba(0, 0, 0, .1);
 }
-    
-$theme.sc-table-header .dragging .dragger {
-  display: none;
-}
-    
+  
 $theme.sc-table-data-view .sc-dataview-row {
   background-color: white;
 
