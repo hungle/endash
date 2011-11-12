@@ -18,18 +18,29 @@ SC.TableHeaderCellView = SC.View.extend({
   sortDescriptor: null,
   sortDescriptorBinding: '.parentView.sortDescriptor',
   
-  sortStateBinding: '*column.sortState'  ,
+  sortStateBinding: '*column.sortState',
+
+  createChildViews: function() {
+    var labelView, thumbView, sortStateView;
+
+    labelView = this.createChildView(this.get('labelView').extend({
+      layout: { left: 8, right: 28, centerY: 0, height: this.get('fontHeight') }
+    }));
+    this.set('labelView', labelView);
+
+    thumbView = this.createChildView(this.get('thumbView'));
+    this.set('thumbView', thumbView);
+
+    sortStateView = this.createChildView(this.get('sortStateView'));
+    this.set('sortStateView', sortStateView);
+
+    this.set('childViews', [labelView, thumbView, sortStateView]);
+  },
   
-  childViews: 'labelView thumbView sortStateView'.w(),
-    
   labelView: SC.View.extend({
-    tagName: 'label',
-    
-    layout:{left:8,right:28,top:0,bottom:0},
-    
-    valueBinding: '.parentView.column.title',
-    
     displayProperties: ['value'],
+    tagName: 'label',
+    valueBinding: '.parentView.column.title',
     render: function(context,firstTime){
       context.push(this.get('value'));
     }

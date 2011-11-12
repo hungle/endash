@@ -80,7 +80,8 @@ SC.TableHeaderView = SC.TableRowView.extend({
       delegate: this,
       first: col === 0,
       layout: layout,
-      thumbView: this.get('thumbView')
+      thumbView: this.get('thumbView'),
+      fontHeight: this.getPath('table.headerFontHeight')
     });
   },
   

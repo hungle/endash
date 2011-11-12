@@ -105,7 +105,14 @@ SC.TableView = SC.View.extend({
     
     @property {Number}
   */
-  headerHeight:26,
+  headerHeight: 26,
+
+  /**
+    The height of the header font
+
+    @property {Number}
+  */
+  headerFontHeight: 18,
   
   /**
     If set to NO the horizontal scroller will be suppressed.

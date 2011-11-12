@@ -7,16 +7,16 @@
   overflow: visible !important;
 }
 
-.sc-table-header label {
+.sc-table-header .sc-table-cell label {
   display: block;
-  font-family: Helvetica !important;
-  line-height: 26px !important;
+  font-family: Helvetica;
+  line-height: 18px;
   font-weight: normal;
-  color: #363636 !important;
+  color: #363636;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: auto !important;
-  margin: 0px !important;
+  height: auto;
+  margin: 0px;
 }
 
   .sc-table-header .sc-thumb-view {
