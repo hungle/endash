@@ -82,6 +82,7 @@ $theme.sc-table-header .dragger {
   
 $theme.sc-table-data-view .sc-dataview-row {
   background-color: white;
+  color: #404040; 
 
   &.odd {
     background-color: #f9fafb;
@@ -92,9 +93,6 @@ $theme.sc-table-data-view .sc-dataview-row {
     
     .table-cell {
       border-right: none;
-    }
-
-    .sc-label-view {
       color: white; 
       font-weight: bold;
     }
@@ -104,7 +102,6 @@ $theme.sc-table-data-view .sc-dataview-row {
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 30px;
-    color: #404040; 
   }
 }
 
