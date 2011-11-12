@@ -8,23 +8,28 @@ SC.TableHeaderCellView = SC.View.extend({
 
   tagName: 'div',
   
-  displayProperties: ['column','title', 'isSelected'],
+  displayProperties: ['column','title'],
 
   isSelected: function() {
-    var ret;
+    this.invokeLater(this.isSelectedDidChange);
+  }.observes('sortState'),
+
+  isSelectedDidChange: function() {
+    // TODO: This is a hack until we look into why we can't update UI in
+    // update method. Currently if css is updated in update method, 
+    // the table cell width gets reset to the initial width at startup
+    // rather then not changing...
     switch (this.get('sortState')) {
     case 'ASC':
     case 'DESC':
-      ret = YES;
+      this.$().toggleClass('sel', YES);
       break;
 
     default:
-      ret = NO;
+      this.$().toggleClass('sel', NO);
       break;
-    }
-
-    return ret;
-  }.property('sortState').cacheable(),
+    } 
+  },
 
   column: null,
     
@@ -53,10 +58,6 @@ SC.TableHeaderCellView = SC.View.extend({
     this.set('childViews', [labelView, thumbView, sortStateView]);
   },
 
-  render: function(context, firstTime) {
-    context.setClass('sel', this.get('isSelected'));
-  },
-  
   labelView: SC.View.extend({
     displayProperties: ['value'],
     tagName: 'label',
