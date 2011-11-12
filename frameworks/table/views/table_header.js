@@ -181,7 +181,8 @@ SC.TableHeaderView = SC.TableRowView.extend({
   
   mouseDown: function(evt) {
     var view = $(evt.target).view()[0];
- 
+    if (!view) return NO;
+
     this._mouseDown = view;
     
     if(view.instanceOf(this.get('thumbView'))) {
